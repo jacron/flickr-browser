@@ -1,0 +1,27 @@
+<div class="card " id="top">
+    <query-text [(query)]="query"></query-text>
+    <button class="submit-btn"
+            (click)="getGroups()"
+    >Refresh</button>
+</div>
+<div *ngIf="waiting">
+    loading...
+</div>
+<ul class="favs">
+    <li *ngFor="let group of groups | query: 'name': query" class="faverer">
+        <a (click)="navigateToList(group.nsid)">
+            <img src="{{ group.x_buddyicon }}"
+                 class="list-buddy-icon"
+                 title="{{ group.name }}"
+            >
+            <div class="faverer-icon">
+                <div class="name">{{ group.name }}</div>
+                <!--<div class="count">({{ group.pool_count }})</div>-->
+            </div>
+        </a>
+    </li>
+</ul>
+<div *ngIf="waiting">
+    loading...
+</div>
+<div class="clear"></div>

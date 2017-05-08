@@ -1,0 +1,29 @@
+<div id="top"></div>
+<div class="card fav-list search"
+     *ngIf="!servicePhotos.photo"
+>
+    <div class="closer" (click)="close()">X</div>
+    <h1 class="search-headline">Flickr Groups List</h1>
+    <buddy [nsid]="nsid" type="group"></buddy>
+</div>
+<div *ngIf="waiting">
+    loading...
+</div>
+<div *ngIf="servicePhotos.photos && !servicePhotos.photo">
+    <photo-list
+            [photos]="servicePhotos.photos"
+            [my]="my"
+            [waiting]="waiting"
+            [offset]="servicePhotos.getOffset()"
+            (selectPhoto)="selectPhoto($event)"
+    ></photo-list>
+</div>
+
+<div *ngIf="servicePhotos.photo">
+    <photo-details
+            [photo]="servicePhotos.photo"
+            (closeDetails)="closeDetails()"
+    ></photo-details>
+</div>
+<div class="clear"></div>
+

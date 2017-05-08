@@ -1,0 +1,62 @@
+<div id="top"></div>
+<div class="card search explore" *ngIf="!servicePhotos.photo">
+    <h1 class="search-headline">Flickr Explore
+        <span *ngIf="servicePhotos.photos">({{ servicePhotos.total }})</span>
+    </h1>
+    <input class="count-input"
+           [(ngModel)]="servicePhotos.perPage"
+           (keyup.enter)="explore(true)"
+           placeholder="Count"
+    >
+    <input class="page-input"
+           [(ngModel)]="servicePhotos.page"
+           (keyup.enter)="explore(false)"
+           placeholder="Page"
+    >
+    <input class="date-input"
+           [(ngModel)]="date"
+           (keyup.enter)="explore(true)"
+           placeholder="Date (YYYY-MM-DD)"
+    >
+    <button (click)="prevDay()"
+            class="nav-date"
+    >&lt;</button>
+    <button *ngIf="date != ''"
+            (click)="nextDay()"
+            class="nav-date"
+    >&gt;</button>
+    <button *ngIf="date != ''"
+            (click)="voidDate()"
+            class="nav-date"
+            >x</button>
+    <br>
+    <button class="submit-btn"
+            (click)="explore(true)"
+    >Fetch</button>
+    <template [ngIf]="servicePhotos.photos && servicePhotos.photos.length && !servicePhotos.photo">
+        <div class="page-navigation">
+            <page-navigation (prev)="prevPage()"
+                             (next)="nextPage()"
+                             [page]="servicePhotos.page"
+                             [pages]="servicePhotos.pages"
+            ></page-navigation>
+        </div>
+    </template>
+</div>
+
+<div *ngIf="servicePhotos.photos && !servicePhotos.photo">
+    <photo-list
+            [photos]="servicePhotos.photos"
+            [waiting]="waiting"
+            [my]="my"
+            [offset]="servicePhotos.getOffset()"
+            (selectPhoto)="selectPhoto($event)"
+    ></photo-list>
+</div>
+
+<div *ngIf="servicePhotos.photo">
+    <photo-details
+            [photo]="servicePhotos.photo"
+            (closeDetails)="closeDetails()"
+    ></photo-details>
+</div>

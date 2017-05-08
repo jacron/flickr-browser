@@ -1,0 +1,79 @@
+.card.list {
+    padding: 24px 140px;
+    background-color: #f2f3f4;
+}
+.page-navigation {
+    clear: both;
+    font-size: 20px;
+}
+.tile {
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    padding-bottom: 12px;
+}
+.tile img {
+    max-height: 333px;
+}
+.title {
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    font-size: 20px;
+}
+.info {
+    /*background-color: #fff;*/
+    color: #fff;
+    position: absolute;
+    margin-top: -60px;
+    padding: 6px;
+}
+.gradient {
+    background: linear-gradient(0deg, rgba(0,0,0,.9) 0,transparent 50%, transparent);
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 10px;
+    transition: opacity .2s linear;
+    opacity: 1;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.08);
+    display: inline-block;
+}
+.info div {
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+.page-navigation button {
+    font-size: 20px;
+    padding: 4px 8px 6px;
+    margin-bottom: 20px;
+    background-color: aliceblue;
+    border-radius: 6px;
+    display: inline-block;
+}
+.page-navigation button:hover {
+    background-color: #2D8BCF;
+    color: #fff;
+}
+.page-navigation > div {
+    display: inline-block;
+    padding: 4px;
+}
+.search-label {
+    float: right;
+}
+.buddy-icon-container {
+    position: absolute;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+.buddy-icon {
+    /*position: absolute;*/
+    /*margin-top: -96px;*/
+    width: 48px;
+    height: 48px;
+}
+.favorites {
+    padding-left: 5px;
+}

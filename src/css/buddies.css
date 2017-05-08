@@ -1,0 +1,36 @@
+.favicon {
+    display: inline-block;
+    background-image: url("../images/scrappy.png");
+    background-size: 214px 204px;
+    background-position: 0 -172px;
+    margin: -22px 0 0 0;
+    vertical-align: middle;
+    width: 18px;
+    height: 17px;
+}
+.favorites {
+    margin: 12px 0 12px 0;
+}
+.favorites a {
+    text-decoration: none;
+}
+.favorites img {
+    margin-left: 20px;
+}
+.owner {
+    margin: 0 0 12px 0;
+}
+.owner > div {
+    display: inline-block;
+    vertical-align: top;
+}
+.favorites.list a {
+    display: inline-block;
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.favorites.list img {
+    margin-right: 8px;
+}

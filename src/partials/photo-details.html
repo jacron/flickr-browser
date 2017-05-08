@@ -1,0 +1,69 @@
+<!--suppress HtmlUnknownTarget -->
+<div class="current-photo">
+    <div class="photo">
+        <div class="closer" (click)="close()">X</div>
+        <img src="{{ altSrc? photo.xAltSrc: photo.xSrc  }}"
+             [ngClass]="{expanded: expand}">
+        <h2>{{ photo.title }}</h2>
+        <p><span class="description"
+                 [innerHTML]="photo.xDescription"></span>
+            &nbsp;<span>{{ photo.views }} views</span>
+            <span *ngIf="photo.favorites && photo.favorites.length">
+                , {{ photo.favorites.length }} {{photo.favorites.length == 1? 'fave' : 'faves'}}</span>
+        </p>
+        <p>
+            <span>
+                Taken on: {{ photo.datetaken||photo.taken | date: &apos;d MMM yyyy  - H:mm&apos; }}
+            </span>|
+            <span>
+                Posted: {{ photo.posted | date: &apos;d MMM yyyy&apos; }}
+            </span>
+        </p>
+        <input type="checkbox"
+               title="alternate image source"
+               [(ngModel)]="altSrc">
+    </div>
+    <div class="info">
+        <div class="owner">
+            <a href="{{ photo.xOwnerPage }}">
+                <img src="{{ photo.xBuddyIconSrc }}">
+            </a>
+            <div>
+                <a href="{{ photo.xOwnerPage }}">{{ photo.ownername }}</a>
+                <a href="{{ photo.xDna }}">dna</a>
+                <span *ngIf="photo.xOriginalsrc">
+                    <a href="{{ photo.xOriginalsrc }}">original</a>
+                </span>
+            </div>
+        </div>
+        <buddies [isList]="false" [items]="photo.favorites"></buddies>
+        <exif [exif]="photo.xExif"></exif>
+        <ul>
+            <li *ngFor="let comment of photo.comments" class="card">
+                <a title="{{ comment.username }}" href="{{ comment.ownerpage}}">
+                    <img src="{{ comment.buddyicon }}" width="30">
+                    {{ comment.username }}
+                </a><br>
+                <div class="comment" [innerHTML]="comment.content"></div>
+            </li>
+        </ul>
+        <div class="tags">{{ photo.tags }}</div>
+        <buddy *ngFor="let id of photo.group_ids"
+               type="group"
+               [nsid]="id"
+               short="true"
+        ></buddy>
+        <br>
+        <div *ngIf="photo.set">
+            <label>Albums:</label>
+            <span *ngFor="let album of photo.set; let isLast=last">
+                {{album.title}}{{isLast? '': ', '}}
+            </span>
+        </div>
+        <div *ngIf="photo.location">
+            <a class="link" href="https://www.google.nl/maps/place/{{ photo.location.latitude }},{{ photo.location.longitude }}">
+                google maps
+            </a>
+        </div>
+    </div>
+</div>

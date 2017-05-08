@@ -1,0 +1,36 @@
+<div class="card " id="top">
+    <h1 class="search-headline">Following
+        ({{ persons.length }})
+    </h1>
+    <query-text [(query)]="query"></query-text>
+    <button class="submit-btn"
+            (click)="search(true)"
+    >Refresh</button>
+</div>
+<div *ngIf="waiting">
+    loading...
+</div>
+<buddies [isList]="true" [items]="persons" [(query)]="query"></buddies>
+<div class="card list" *ngIf="photos && !photo">
+    <div *ngIf="person && person.ownerpage">
+        <a href="{{ person.ownerpage }}" title="{{ person.username }}">
+            <img src="{{ person.buddyicon }}" class="buddy-icon">
+            <div *ngIf="person.realname">{{ person.realname }}</div>
+        </a>
+    </div>
+    <hr>
+    <photo-list
+            [photos]="photos"
+            [my]="my"
+            (selectPhoto)="selectPhoto($event)"
+    ></photo-list>
+</div>
+
+<div *ngIf="photo">
+    <photo-details
+            [photo]="photo"
+            (closeDetails)="closeDetails()"
+    ></photo-details>
+</div>
+<div class="clear"></div>
+

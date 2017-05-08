@@ -1,0 +1,62 @@
+<div id="top"></div>
+<div class="card browse"
+     *ngIf="!servicePhotos.photo">
+    <h1 class="search-headline">
+        Flickr Filter
+        <span *ngIf="servicePhotos.photos && servicePhotos.photos.length">
+            ({{servicePhotos.photos.length}})
+        </span>
+    </h1>
+
+    <select class="sort-input"
+            title="camera"
+            [(ngModel)]="selectedCamera"
+    >
+        <option *ngFor="let option of cameras"
+                [ngValue]="option">{{ option }}</option>
+    </select>
+    <button class="submit-btn"
+            [disabled]="!selectedCamera || !selectedCamera.length"
+            (click)="fetchCamera(true)"
+    >Fetch</button>
+    <a class="cmd"
+            (click)="getCameras()"
+    >Refresh Cameras</a><br>
+
+    <select class="sort-input"
+            title="lens"
+            [(ngModel)]="selectedLensModel"
+    >
+        <option *ngFor="let option of lensModels"
+                [ngValue]="option">{{ option }}</option>
+    </select>
+    <button class="submit-btn"
+            [disabled]="!selectedLensModel || !selectedLensModel.length"
+            (click)="fetchLensModel(true)"
+    >Fetch</button>
+    <a class="cmd"
+            (click)="getLenses()"
+    >Refresh Lenses</a><br>
+    <h2 *ngIf="servicePhotos.photos.length">
+        {{ selectedCamera || selectedLensModel }}
+    </h2>
+
+</div>
+
+<div *ngIf="servicePhotos.photos && !servicePhotos.photo">
+    <photo-list
+            [photos]="servicePhotos.photos"
+            (selectPhoto)="servicePhotos.select($event)"
+            [my]="my"
+            [offset]="servicePhotos.getOffset()"
+            [waiting]="waiting"
+    ></photo-list>
+</div>
+
+<div *ngIf="servicePhotos.photo">
+    <photo-details
+            [photo]="servicePhotos.photo"
+            (closeDetails)="servicePhotos.clearPhoto()"
+    ></photo-details>
+</div>
+<div class="clear"></div>

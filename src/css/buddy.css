@@ -1,0 +1,24 @@
+.collapsed {
+    height: 60px;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.2)); 	/* Safari, Chrome */
+    background: -moz-linear-gradient(top, rgba(0,0,0,0.1), rgba(0,0,0,0.65));						/* Firefox */
+    filter: 	progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#a6000000', GradientType=0);	/* IE */
+    background: linear-gradient(top, rgba(0,0,0,0.1), rgba(0,0,0,0.65)); /* W3C */
+}
+.expander {
+    padding: 2px 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 4px 0 0 0;
+}
+.expander:hover {
+    background-color: #DF7A47;
+    color: white;
+}
+.buddy-icon {
+    width: 48px;
+    height: 48px;
+}

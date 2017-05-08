@@ -1,0 +1,14 @@
+.closer {
+    float: right;
+    padding: 10px 16px;
+    margin-bottom: 4px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 20px;
+    position: relative;
+    top: 8px;
+}
+.closer:hover {
+    background-color: #DF7A47;
+    color: white;
+}

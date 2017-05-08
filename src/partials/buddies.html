@@ -1,0 +1,13 @@
+<!--suppress HtmlUnknownTarget -->
+<div *ngIf="items && items.length > 0"
+     class="favorites {{ listClass }}"
+>
+    <div *ngIf="hasIcon" class="favicon"></div>
+    <span *ngFor="let fav of items | query: 'name': query ">
+        <a title="{{ fav.name }}"
+           href="{{ fav.ownerpage}}">
+            <img src="{{ fav.buddyicon }}" width="30">
+            <span>{{fav.name }}</span>
+        </a>
+    </span>
+</div>

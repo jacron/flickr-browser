@@ -1,0 +1,57 @@
+<div id="top"></div>
+<div class="card search my" *ngIf="!servicePhotos.photo">
+    <h1 class="search-headline">Flickr My</h1>
+    <select [(ngModel)]="category" title="category">
+        <option *ngFor="let option of categoryOptions"
+                [ngValue]="option.value">{{ option.name }}</option>
+    </select>
+    <input class="count-input"
+           [(ngModel)]="servicePhotos.perPage"
+           (keyup.enter)="search(false)"
+           placeholder="Count"
+    >
+    <input class="page-input"
+           [(ngModel)]="servicePhotos.page"
+           (keyup.enter)="search(false)"
+           placeholder="Page"
+    >
+    <button class="submit-btn"
+            (click)="search(true)"
+    >Fetch</button>
+    <br>
+    <template [ngIf]="servicePhotos.photos && !servicePhotos.photo">
+        <div class="page-navigation">
+            <page-navigation (prev)="prevPage()"
+                             (next)="nextPage()"
+                             [page]="servicePhotos.page"
+                             [pages]="servicePhotos.pages"
+            ></page-navigation>
+        </div>
+    </template>
+</div>
+
+<div *ngIf="servicePhotos.photos && !servicePhotos.photo">
+    <photo-list
+            [photos]="servicePhotos.photos"
+            [my]="my"
+            [waiting]="waiting"
+            [offset]="servicePhotos.getOffset()"
+            (selectPhoto)="servicePhotos.select($event)"
+    ></photo-list>
+</div>
+
+<div *ngIf="servicePhotos.photo">
+    <photo-details
+            [photo]="servicePhotos.photo"
+            (closeDetails)="closeDetails()"
+    ></photo-details>
+</div>
+<div class="clear"></div>
+
+<div class="page-navigation" *ngIf="servicePhotos.photos && !servicePhotos.photo">
+    <page-navigation (prev)="prevPage()"
+                     (next)="nextPage()"
+                     [page]="servicePhotos.page"
+                     [pages]="servicePhotos.pages"
+    ></page-navigation>
+</div>

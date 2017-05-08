@@ -1,0 +1,37 @@
+<div id="top"></div>
+<message
+        [text]="message.text"
+        [type]="message.type"
+        [show]="message.show"
+></message>
+<div class="card list fav-list"
+     *ngIf="!servicePhotos.photo"
+>
+    <div class="closer" (click)="close()">X</div>
+    <h1 class="search-headline">Favorites Photolist
+        <template [ngIf]="servicePhotos.photos.length">
+            ({{servicePhotos.photos.length}})
+        </template>
+    </h1>
+    <buddy [nsid]="nsid" type="person"></buddy>
+    - <a (click)="refreshFavorites()" class="link">refresh</a>
+
+</div>
+<div *ngIf="servicePhotos.photos && !servicePhotos.photo">
+    <photo-list
+            [photos]="servicePhotos.photos"
+            [my]="my"
+            [waiting]="waiting"
+            [offset]="servicePhotos.getOffset()"
+            (selectPhoto)="servicePhotos.select($event)"
+    ></photo-list>
+</div>
+
+<div *ngIf="servicePhotos.photo">
+    <photo-details
+            [photo]="servicePhotos.photo"
+            (closeDetails)="servicePhotos.clearPhoto()"
+    ></photo-details>
+</div>
+<div class="clear"></div>
+

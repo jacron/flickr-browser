@@ -1,0 +1,14 @@
+.page-navigation button,
+.nav-date {
+    background-color: aliceblue;
+    border-radius: 3px;
+}
+.page-navigation button:hover,
+.nav-date:hover {
+    background-color: #2D8BCF;
+    color: #fff;
+}
+.page-navigation > div {
+    display: inline-block;
+    padding: 4px;
+}

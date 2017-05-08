@@ -1,0 +1,35 @@
+<div id="top"></div>
+<div class="card browse"
+     *ngIf="!servicePhotos.photo">
+    <query-text [(query)]="query"></query-text>
+    <ul>
+        <li *ngFor="let lens of lensModels | query: null: query">
+            <a class="link" (click)="selectLens(lens)">{{lens}}</a>
+        </li>
+    </ul>
+    <a class="cmd"
+            (click)="getLenses()"
+    >Refresh Lenses</a><br>
+    <h2 *ngIf="servicePhotos.photos.length">
+        {{ selectedLensModel }}
+        <span *ngIf="servicePhotos.photos && servicePhotos.photos.length">
+            ({{servicePhotos.photos.length}})
+        </span>
+    </h2>
+</div>
+<div *ngIf="servicePhotos.photos && !servicePhotos.photo">
+    <photo-list
+            [photos]="servicePhotos.photos"
+            (selectPhoto)="servicePhotos.select($event)"
+            [my]="my"
+            [offset]="servicePhotos.getOffset()"
+            [waiting]="waiting"
+    ></photo-list>
+</div>
+<div *ngIf="servicePhotos.photo">
+    <photo-details
+            [photo]="servicePhotos.photo"
+            (closeDetails)="servicePhotos.clearPhoto()"
+    ></photo-details>
+</div>
+<div class="clear"></div>

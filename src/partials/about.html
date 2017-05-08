@@ -1,0 +1,21 @@
+<!--suppress HtmlUnknownTarget -->
+
+<div class="card">
+    <h1>Links</h1>
+    <div *ngFor="let key of linksDictionaryKeys()">
+        <h2>{{ key }}</h2>
+        <ul>
+            <li *ngFor="let link of linksDictionary[key]">
+                <a href="{{ link.url }}">
+                    {{ link.name }}
+                </a>
+            </li>
+        </ul><br>
+    </div>
+</div>
+<div class="card">
+    <h1>Disclaimer</h1>
+    <p>
+        This product uses the Flickr API but is not endorsed or certified by Flickr.
+    </p>
+</div>

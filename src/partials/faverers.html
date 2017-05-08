@@ -1,0 +1,49 @@
+<div class="card " id="top">
+    <h2>
+        {{ persons.length }} persons made {{ favoritesCount }} favorites
+    </h2>
+    <query-text [(query)]="query"></query-text>
+    <label for="min-count">Minimal count</label>
+    <input [(ngModel)]="minCount"
+           (ngModelChange)="storeMinCount()"
+           id="min-count"
+           type="number"
+           min="1"
+           class="count-input">
+    <button class="submit-btn"
+            (click)="getFaverers(true)"
+    >Refresh</button>
+    <button class="submit-btn"
+            (click)="getCounts()"
+            title="Get count of all favorites of each person"
+            >Get counts</button>
+</div>
+<div *ngIf="waiting">
+    loading...
+</div>
+<ul class="favs">
+    <li *ngFor="let person of persons | query:'name': query"
+        class="faverer"
+        (click)="navigateToList(person.nsid)"
+    >
+        <a
+           title="{{ person.realname || person.username}}"
+           *ngIf="person.items.length >= minCount"
+        >
+            <img src="{{ person.buddyicon }}"
+                 class="list-buddy-icon"
+                 title="{{ person.username }}"
+            >
+            <div class="faverer-icon">
+                <div class="name">{{ person.name }}</div>
+                <div class="count">({{ person.items.length }})</div>
+                <template [ngIf]="showCounts && person.favorites_count">
+                    <br>
+                    <div class="favcount">({{ person.favorites_count }})</div>
+                </template>
+            </div>
+        </a>
+    </li>
+    <li class="clear"></li>
+</ul>
+

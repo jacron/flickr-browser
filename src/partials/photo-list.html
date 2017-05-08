@@ -1,0 +1,39 @@
+<!--suppress HtmlUnknownTarget -->
+<div [hidden]="!waiting">
+    loading...
+</div>
+<div class="card list">
+    <ul id="cardlist">
+        <li class="tile"
+            *ngFor="let p of photos; let idx=index"
+        >
+            <a *ngIf="!my"
+               href="{{ p.x_ownerpage }}"
+               class="buddy-icon-container"
+               title="{{ p.ownername }}">
+                <img src="{{ p.x_buddyicon }}" class="buddy-icon">
+            </a>
+            <a (click)="select(p, idx)">
+                <div>
+                    <img src="{{ p.url_m }}"
+                         [ngClass]="{'has-original': p.originalsecret}"
+                         (click)="select(p, idx)"
+                         [attr.width]="p.width ? p.width : null"
+                         [attr.height]="p.height ? p.height : null"
+                    >
+                    <div class="gradient"></div>
+                </div>
+                <div class="info">
+                    <div class="title">{{ idx + offset + 1 }}.&nbsp;{{ p.title.substr(0, 60) }}</div><br>
+                    <div class="views">{{ p.views }} views</div>
+                    <span class="faves" *ngIf="p.favorites && p.favoritesLen > 0">
+                      , {{ p.favoritesLen }} {{p.favoritesLen == 1? 'fave' : 'faves'}}</span>
+                    <span class="faves" *ngIf="p.commentsCount > 0">
+                      , {{ p.commentsCount }} {{p.commentsCount == 1? 'comment' : 'comments'}}</span>
+                    <span *ngIf="p.favedate">, {{p.strfavedate}}</span>
+                </div>
+            </a>
+        </li>
+        <li class="page-navigation"></li>
+    </ul>
+</div>

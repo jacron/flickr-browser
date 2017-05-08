@@ -1,0 +1,24 @@
+<template [ngIf]="exif">
+    <ul class="exif-main">
+        <template [ngIf]="exif.camera">
+            <li *ngIf="exif.cameraImage.length"><img src="/images/{{ exif.cameraImage }}"></li>
+            <li>{{ exif.camera }}</li>
+        </template>
+        <li>{{ exif.lensModel }}</li>
+        <li>
+            <template [ngIf]="exif.aperture">
+                {{ exif.aperture }} *
+                {{ exif.exposure }} *
+                {{ exif.iso }} iso *
+                {{ exif.focalLength }}&nbsp;
+            </template>
+            <span [innerHTML]="detailsExpanded? '\\/' : '&gt;'"
+                  (click)="toggleDetailsExpanded()"
+                  class="toggle"
+            ></span>
+        </li>
+    </ul>
+    <ul *ngIf="detailsExpanded">
+        <li *ngFor="let d of exif.otherdetails">{{ d }}</li>
+    </ul>
+</template>

@@ -1,0 +1,33 @@
+<div *ngIf="person && person.ownerpage" class="faverer-icon">
+    <a href="{{ person.ownerpage }}" title="{{ person.username }}">
+        <img src="{{ person.buddyicon }}" class="buddy-icon">
+        <div class="person-label">
+            <span *ngIf="photos">({{ photos.length }})</span>
+            <br>
+            <div *ngIf="person.name"
+                 class="person-name"
+                 [innerHTML]="person.name"
+            >
+            </div>
+        </div>
+    </a>
+    <template [ngIf]="!short">
+        <a *ngIf="person.dna" href="{{ person.dna }}">dna</a>
+        <p>
+            <a href="{{ person.website || person.ownerpage }}">{{ person.realname||person.username }}</a>
+            ({{ person.favoritesCount }})
+            {{ person.hometown }} {{ person.city }} {{ person.country }}<br>
+        </p>
+        <div *ngIf="person.profileDescription">
+            <p
+               [innerHTML]="person.profileDescription"
+               [ngClass]="{collapsed:descriptionCollapsed}"
+            >
+            </p>
+            <div class="expander"
+                    (click)="descriptionCollapsed = !descriptionCollapsed">
+                <span [innerHTML]="descriptionCollapsed? '\\/':'/\\'"></span>
+            </div>
+        </div>
+    </template>
+</div>

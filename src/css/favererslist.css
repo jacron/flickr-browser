@@ -1,0 +1,15 @@
+.faverer-icon div {
+    display: inline-block;
+}
+.faverer-icon a {
+    text-decoration: none;
+}
+.fav-list {
+    min-height: 154px;
+}
+.link {
+    cursor: pointer;
+}
+.link:hover {
+    text-decoration: underline !important;
+}

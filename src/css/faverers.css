@@ -1,0 +1,43 @@
+.favs li {
+    float: left;
+    width: 232px;
+}
+.faverer {
+    cursor: pointer;
+}
+.faverer:hover {
+    background-color: #e6eaec;
+}
+.faverer a {
+    font-weight: 600;
+    color: #006dac;
+}
+.faverer img {
+    width: 48px;
+}
+.faverer a {
+    text-decoration: none;
+}
+.faverer div {
+    display: inline-block;
+}
+.fav-list {
+    height: 234px;
+}
+.faverer-icon {
+       position: relative;
+    top: -10px;
+}
+.submit-btn {
+    position: relative;
+}
+.faverer-icon .name {
+    max-width: 130px;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+.faverer-icon .count {
+    overflow-x: hidden;
+}
+

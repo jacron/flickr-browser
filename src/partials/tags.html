@@ -1,0 +1,38 @@
+<div class="card search" id="top">
+    <h1 class="search-headline">Flickr Hot Tags</h1>
+    <div class="card"
+         *ngFor="let tag of tags"
+         class="score_{{ tag.score }}"
+    >
+        <p><a href="{{ tag.page }}">{{ tag._content }}</a>
+            ({{ tag.score }})</p>
+    </div>
+    <select [(ngModel)]="period">
+        <option value="day">day</option>
+        <option value="week">week</option>
+    </select>
+    <input class="count-input"
+           [(ngModel)]="count"
+           (keyup.enter)="fetch()"
+           placeholder="Count"
+    >
+    <br>
+    <button class="submit-btn"
+            (click)="fetch()"
+    >refresh</button>
+</div>
+
+<div *ngIf="photos && !photo">
+    <photo-list
+            [photos]="photos"
+            [waiting]="waiting"
+            (selectPhoto)="selectPhoto($event)"
+    ></photo-list>
+</div>
+
+<div class="card search details" *ngIf="photo">
+    <photo-details
+            [photo]="photo"
+            (closeDetails)="closeDetails()"
+    ></photo-details>
+</div>

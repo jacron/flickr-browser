@@ -1,0 +1,11 @@
+<!--suppress HtmlUnknownTarget -->
+<div class="card">
+    <h1>Interesting Links</h1>
+    <ul>
+        <li *ngFor="let link of links">
+            <a href="{{ link.url }}">
+                {{ link.name }}
+            </a>
+        </li>
+    </ul>
+</div>

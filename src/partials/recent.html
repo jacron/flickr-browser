@@ -1,0 +1,54 @@
+<div id="top"></div>
+<div class="card search" *ngIf="!photo">
+    <h1 class="search-headline">Flickr Recent</h1>
+    <label class="search-label">search
+        <span *ngIf="photos">({{ total }})</span>
+    </label>
+    <input class="count-input"
+           [(ngModel)]="count"
+           (keyup.enter)="search(false)"
+           placeholder="Count"
+    >
+    <input class="page-input"
+           [(ngModel)]="page"
+           (keyup.enter)="search(false)"
+           placeholder="Page"
+    >
+    <br>
+    <button class="submit-btn"
+            (click)="search(true)"
+    >Submit</button>
+    <template [ngIf]="photos && !photo">
+        <div class="page-navigation">
+            <button *ngIf="page > 1"
+                    (click)="prevPhoto()">&lt;</button>
+            <div>{{ page }}
+                <span>({{ pages }})</span></div>
+            <button *ngIf="page < pages"
+                    (click)="nextPhoto()">&gt;</button>
+        </div>
+    </template>
+</div>
+
+<div *ngIf="photos && !photo">
+    <photo-list
+            [photos]="photos"
+            [waiting]="waiting"
+            (selectPhoto)="selectPhoto($event)"
+    ></photo-list>
+</div>
+
+<div *ngIf="photo">
+    <photo-details
+            [photo]="photo"
+            (closeDetails)="closeDetails()"
+    ></photo-details>
+</div>
+<div class="clear"></div>
+
+<div class="page-navigation" *ngIf="photos && !photo">
+    <button (click)="prevPhoto()" *ngIf="page > 1">&lt;</button>
+    <div>{{ page }}</div>
+    <button (click)="nextPhoto()" *ngIf="page < pages">&gt;</button>
+    <div class="search-label">search for: <span>{{ text }}</span></div>
+</div>

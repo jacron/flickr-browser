@@ -1,0 +1,63 @@
+.current-photo {
+    position: relative;
+    margin-top: -36px;
+}
+.current-photo .photo {
+    background-color: #212124;
+    text-align: center;
+    padding: 30px;
+    color: #fff;
+}
+.current-photo p {
+    font-size: medium;
+}
+.current-photo img {
+    max-width: 100%;
+}
+.current-photo a {
+    text-decoration: none;
+}
+.current-photo img.expanded {
+    max-width: inherit;
+}
+.closer {
+    float: right;
+    padding: 10px 18px;
+    margin-bottom: 4px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.closer:hover {
+    background-color: #DF7A47;
+    color: white;
+}
+.comment {
+    width: 300px;
+    margin: 0;
+}
+.info {
+    background-color: #f3f5f6;
+    text-align: left;
+    padding: 30px;
+}
+.description {
+    font-style: italic;
+}
+.favicon {
+    display: inline-block;
+    background-size: 214px 204px;
+    background: url("../images/scrappy.png") 0 -172px;
+    margin: -22px 0 0 0;
+    vertical-align: middle;
+    width: 18px;
+    height: 17px;
+}
+.tags {
+    border: 1px solid #cecece;
+    padding: 2px 4px;
+    margin: 14px 0;
+}
+.sebm-google-map-container {
+    height: 300px;
+}

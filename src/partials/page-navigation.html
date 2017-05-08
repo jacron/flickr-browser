@@ -1,0 +1,5 @@
+<span class="page-navigation">
+    <button (click)="prevPage()" *ngIf="page > 1">&lt;</button>
+    <span>page&nbsp;{{ page }}&nbsp;of&nbsp;{{ pages }}&nbsp;</span>
+    <button (click)="nextPage()" *ngIf="page < pages">&gt;</button>
+</span>

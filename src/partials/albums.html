@@ -1,0 +1,66 @@
+<div id="top"></div>
+<div class="card albums"
+     *ngIf="!servicePhotos.photo">
+    <div class="closer"
+         *ngIf="servicePhotos.photos.length"
+         (click)="close()">X</div>
+    <template [ngIf]="!servicePhotos.photos.length">
+        <h2 class="search-headline">
+            My Albums
+            <span *ngIf="albums.length">
+            ({{ albums.length }})
+            </span>
+        </h2>
+        <query-text [(query)]="query"></query-text>
+        <button class="submit-btn"
+                (click)="search(true)"
+        >Refresh</button>
+    </template>
+    <template [ngIf]="servicePhotos.photos.length && !servicePhotos.photo">
+        <h1 class="search-headline">
+            Album: {{selectedAlbum.name}}
+        </h1>
+    </template>
+</div>
+<div *ngIf="waiting">
+    loading...
+</div>
+<ul *ngIf="!servicePhotos.photos.length && !servicePhotos.photo" class="album-tiles-container">
+    <li *ngFor="let album of albums | query: 'name': query" class="album-card">
+        <a (click)="fetchPhotos(album)">
+            <div *ngIf="album.src"
+                 [style.background-image]="album.src"
+                    class="album-tile">
+            </div>
+            <div class="gradient"></div>
+            <div class="album-info">
+                <h2>{{album.name}}</h2>
+                {{album.count}} photos
+                <span *ngIf="album.count_views > 0">
+                    , {{album.count_views}} views
+                </span>
+                <span *ngIf="album.count_comments > 0">
+                    , {{album.count_comments}} comments
+                </span>
+            </div>
+        </a>
+    </li>
+</ul>
+<div *ngIf="servicePhotos.photos.length && !servicePhotos.photo">
+    <photo-list
+            [photos]="servicePhotos.photos"
+            (selectPhoto)="servicePhotos.select($event)"
+            [my]="my"
+            [offset]="servicePhotos.getOffset()"
+            [waiting]="waiting"
+    ></photo-list>
+</div>
+
+<div *ngIf="servicePhotos.photo">
+    <photo-details
+            [photo]="servicePhotos.photo"
+            (closeDetails)="servicePhotos.clearPhoto()"
+    ></photo-details>
+</div>
+<div class="clear"></div>
+

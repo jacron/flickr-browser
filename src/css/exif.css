@@ -1,0 +1,12 @@
+.exif-main {
+    font-weight: 600;
+}
+.toggle {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 8px;
+}
+.toggle:hover {
+    background-color: #DF7A47;
+    color: white;
+}

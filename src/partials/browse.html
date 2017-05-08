@@ -1,0 +1,147 @@
+<div id="top"></div>
+<message
+        [text]="message.text"
+        [type]="message.type"
+        [show]="message.show"
+></message>
+<div class="card browse"
+     *ngIf="!servicePhotos.photo">
+    <div class="toggle"
+        (click)="toggleCardView()">
+        <span>{{ cardViewExpanded ? '/\\' : '\\/' }}</span>
+    </div>
+    <h1 class="search-headline">
+        Flickr Browse
+        <span *ngIf="servicePhotos.photos">
+            ({{servicePhotos.total}})
+        </span>
+    </h1>
+    <buddy *ngIf="searchSettings.my"
+           short="true"
+           [nsid]="searchSettings.myNsid"
+           type="person"></buddy>
+    <div class="body" *ngIf="cardViewExpanded ">
+        <div class="search-container">
+            <label>Search</label>
+            <input class="search-input"
+                   [(ngModel)]="searchSettings.text"
+                   (keyup.enter)="search(true)"
+                   placeholder="Text"
+                   name="xquery"
+                   #focusable
+                   list="query-list"
+            >
+            <datalist id="query-list">
+                <option *ngFor="let item of history.items">
+                    {{item.text}}</option>
+            </datalist>
+            <span class="reset-text fa fa-times-circle"
+                  *ngIf="searchSettings.text.length"
+                  (click)="resetQuery(focusable);"
+            ></span>
+            <span *ngIf="cardViewExpanded"
+                  [innerHTML]="historyViewExpanded ? '\\/' : '&gt;'"
+                  (click)="toggleHistoryView()"
+            >
+            </span>
+        </div>
+        <div *ngIf="historyViewExpanded">
+            <div class="history-item"
+                 *ngFor="let item of history.getItems()">
+                <a class="name"
+                   (click)="openHistoryItem(item)">
+                    {{ item.text }}</a>
+                <a class="remove" (click)="removeHistoryItem(item)">x</a>
+            </div>
+        </div>
+        <input class="count-input"
+               [(ngModel)]="servicePhotos.perPage"
+               (keyup.enter)="search(false)"
+               placeholder="Count"
+        >
+        <input class="page-input"
+               [(ngModel)]="servicePhotos.page"
+               (keyup.enter)="search(false)"
+               placeholder="Page"
+        >
+        <select class="safe-input"
+                title="safe input"
+                [(ngModel)]="searchSettings.safe"
+        >
+            <option value="1">safe</option>
+            <option value="2">moderate</option>
+            <option value="3">restricted</option>
+        </select>
+        <select class="sort-input"
+                title="sort"
+                [(ngModel)]="searchSettings.sort"
+        >
+            <option *ngFor="let option of sSortOptions"
+                    [ngValue]="option.value">{{ option.name }}</option>
+        </select>
+        <select class="tag-mode"
+                [(ngModel)]="searchSettings.tagMode"
+                title="tag-mode"
+        >
+            <option value="any">or</option>
+            <option value="all">and</option>
+        </select>
+        <select class="tags-or-text"
+                title="tags or text"
+                [(ngModel)]="searchSettings.tagsOrText">
+            <option value="tags">tags</option>
+            <option value="text">text</option>
+        </select>
+        <select [(ngModel)]="searchSettings.viewSort" title="views sort">
+            <option value="">[unsort]</option>
+            <option value="views">views</option>
+            <option value="-views">-views</option>
+        </select><br>
+        <label for="mine">mine</label>
+        <input type="checkbox"
+               [(ngModel)]="searchSettings.my"
+               class="checkbox-mine"
+               title="mine"
+               id="mine"
+        >
+        <button class="submit-btn"
+                (click)="search(true)"
+        >Fetch</button>
+        <template [ngIf]="servicePhotos.photos && !servicePhotos.photo">
+            <div class="page-navigation">
+                <page-navigation (prev)="prevPage()"
+                                 (next)="nextPage()"
+                                 [page]="servicePhotos.page"
+                                 [pages]="servicePhotos.pages"
+                ></page-navigation>
+            </div>
+        </template>
+    </div>
+</div>
+
+<div *ngIf="servicePhotos.photos && !servicePhotos.photo">
+    <photo-list
+            [photos]="servicePhotos.photos"
+            (selectPhoto)="servicePhotos.select($event)"
+            [my]="searchSettings.my"
+            [offset]="servicePhotos.getOffset()"
+            [waiting]="waiting"
+    ></photo-list>
+</div>
+
+<div *ngIf="servicePhotos.photo">
+    <photo-details
+            [photo]="servicePhotos.photo"
+            (closeDetails)="servicePhotos.clearPhoto()"
+    ></photo-details>
+</div>
+<div class="clear"></div>
+<div class="page-navigation" *ngIf="servicePhotos.photos && !servicePhotos.photo">
+    <page-navigation (prev)="prevPage()"
+                     (next)="nextPage()"
+                     [page]="servicePhotos.page"
+                     [pages]="servicePhotos.pages"
+    ></page-navigation>
+    <div class="search-label">search for:
+        <span class="text">{{ searchSettings.text }}</span></div>
+</div>
