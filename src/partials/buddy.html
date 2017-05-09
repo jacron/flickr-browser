@@ -21,7 +21,7 @@
         <div *ngIf="person.profileDescription">
             <p
                [innerHTML]="person.profileDescription"
-               [ngClass]="{collapsed:descriptionCollapsed}"
+               [class.collapsed]="descriptionCollapsed"
             >
             </p>
             <div class="expander"

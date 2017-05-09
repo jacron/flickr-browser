@@ -1,7 +1,7 @@
 <template [ngIf]="exif">
     <ul class="exif-main">
         <template [ngIf]="exif.camera">
-            <li *ngIf="exif.cameraImage.length"><img src="/images/{{ exif.cameraImage }}"></li>
+            <li *ngIf="exif.cameraImage.length"><img src="./assets/images/{{ exif.cameraImage }}"></li>
             <li>{{ exif.camera }}</li>
         </template>
         <li>{{ exif.lensModel }}</li>

@@ -47,7 +47,7 @@
 .favicon {
     display: inline-block;
     background-size: 214px 204px;
-    background: url("../images/scrappy.png") 0 -172px;
+    background: url("../assets/images/scrappy.png") 0 -172px;
     margin: -22px 0 0 0;
     vertical-align: middle;
     width: 18px;

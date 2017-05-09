@@ -2,23 +2,23 @@
  * Created by orion on 27/02/2017.
  */
 import {RouterModule, Routes} from "@angular/router";
-import {AboutComponent} from "../component/component.about";
-import {AlbumsComponent} from "../component/component.albums";
-import {BrowseComponent} from "../component/component.browse";
-import {ExploreComponent} from "../component/component.explore";
-import {FaverersComponent} from "../component/component.faverers";
-import {FaverersListComponent} from "../component/component.favererslist";
-import {FavoritesComponent} from "../component/component.favorites";
-import {FavoritesListComponent} from "../component/component.favoriteslist";
-import {FollowingComponent} from "../component/component.following";
-import {GroupsComponent} from "../component/component.groups";
-import {GroupsListComponent} from "../component/component.groupslist";
-import {InterestingComponent} from "../component/component.interesting";
-import {MyComponent} from "../component/component.my";
-import {RecentComponent} from "../component/component.recent";
-import {TagsComponent} from "../component/component.tags";
-import {CameraComponent} from "../component/component.camera";
-import {LensesComponent} from "../component/component.lenses";
+import {AboutComponent} from "../component/about.component";
+import {AlbumsComponent} from "../component/albums.component";
+import {BrowseComponent} from "../component/browse.component";
+import {ExploreComponent} from "../component/explore.component";
+import {FaverersComponent} from "../component/faverers.component";
+import {FaverersListComponent} from "../component/favererslist.component";
+import {FavoritesComponent} from "../component/favorites.component";
+import {FavoritesListComponent} from "../component/favoriteslist.component";
+import {FollowingComponent} from "../component/following.component";
+import {GroupsComponent} from "../component/groups.component";
+import {GroupsListComponent} from "../component/groupslist.component";
+import {InterestingComponent} from "../component/interesting.component";
+import {MyComponent} from "../component/my.component";
+import {RecentComponent} from "../component/recent.component";
+import {TagsComponent} from "../component/tags.component";
+import {CameraComponent} from "../component/camera.component";
+import {LensesComponent} from "../component/lenses.component";
 
 const appRoutes: Routes = [
     {
