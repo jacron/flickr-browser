@@ -43,7 +43,6 @@ export class PhotoListComponent implements OnInit, OnChanges {
   }
 
   public onScrolled() {
-    console.log("scroll!!");
     this.nextScrollPage.emit();
   }
 

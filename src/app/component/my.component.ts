@@ -12,160 +12,122 @@ import {flickrUrls} from "../helpers/urls";
  */
 
 @Component({
-    templateUrl: "../../partials/my.html",
-    styleUrls: [ "../../css/browse.css" ],
+  templateUrl: "../../partials/my.html",
+  styleUrls: ["../../css/browse.css"],
 })
 export class MyComponent implements OnInit {
-    public categoryOptions = [
-        { value: "faves", name: "faves" },
-        { value: "views", name: "views" },
-        { value: "comments", name: "comments" },
-        { value: "interesting", name: "in" +
-        "teresting" },
-    ];
-    public category: string;
-    public my = true;
-    public waiting = false;
-    public offset;
-    private subscriptionFav: Subscription = null;
-    private subscriptionCom: Subscription = null;
+  public categoryOptions = [
+    {value: "faves", name: "faves"},
+    {value: "views", name: "views"},
+    {value: "comments", name: "comments"},
+    {value: "interesting", name: "interesting"},
+  ];
+  public category: string;
+  public my = true;
+  public waiting = false;
+  public offset = 0;
+  private subscriptionFav: Subscription = null;
+  private subscriptionCom: Subscription = null;
 
-  constructor(
-    private serviceSearch: ServiceSearch,
-    private serviceStorage: ServiceStorage,
-    public servicePhotos: ServicePhotos,
-    private serviceAddFavorites: ServiceAddFavorites,
-    private serviceAddComments: ServiceAddComments,
-  ) {}
+  constructor(private serviceSearch: ServiceSearch,
+              private serviceStorage: ServiceStorage,
+              public servicePhotos: ServicePhotos,
+              private serviceAddFavorites: ServiceAddFavorites,
+              private serviceAddComments: ServiceAddComments,) {
+  }
 
   public ngOnInit() {
-        this.servicePhotos.initPhotos();
-        this.servicePhotos.resetPage();
-        this.retrieveFromStorage();
-        // console.log(this.servicePhotos.photos);
-        // this.servicePhotos.justify();
-        this.fetch(true);
-    }
+    this.servicePhotos.initPhotos();
+    this.servicePhotos.resetPage();
+    this.retrieveFromStorage();
+    this.servicePhotos.clearPhoto();
+    this.fetch(true);
+  }
 
-    private retrieveFromStorage() {
-        this.servicePhotos.perPage = parseInt(this.serviceStorage.get("my.per_page"), 10) || 15;
-        this.category = this.serviceStorage.get("my.category") || "interesting";
-        // this.servicePhotos.setPhotos(this.serviceStorage.getJSON('my.photos'));
-        // this.servicePhotos.pages = this.serviceStorage.get('my.pages');
-        // this.servicePhotos.total = this.serviceStorage.get('my.total');
-    }
+  private retrieveFromStorage() {
+    this.servicePhotos.perPage = parseInt(this.serviceStorage.get("my.per_page"), 10) || 15;
+    this.category = this.serviceStorage.get("my.category") || "interesting";
+  }
 
-    private persistToStorage() {
-        this.serviceStorage.set("my.per_page", this.servicePhotos.strPerPage());
-        this.serviceStorage.set("my.category", this.category);
+  private persistToStorage() {
+    this.serviceStorage.set("my.per_page", this.servicePhotos.strPerPage());
+    this.serviceStorage.set("my.category", this.category);
+    // this.serviceStorage.setJSON("my.photos", this.servicePhotos.photos);
+    // this.serviceStorage.set("my.pages", this.servicePhotos.pages);
+    // this.serviceStorage.set("my.total", this.servicePhotos.total);
+  }
+
+  private initSearchParams(): URLSearchParams {
+    const searchParams = new URLSearchParams();
+    searchParams.append("per_page", this.servicePhotos.strPerPage());
+    searchParams.append("page", this.servicePhotos.strPage());
+    searchParams.append("sort", this.category);
+    searchParams.append("extras", flickrUrls.extra.full);
+    return searchParams;
+  }
+
+  public closeDetails() {
+    this.servicePhotos.clearPhoto();
+  }
+
+  @HostListener("window:keydown", ["$event"])
+  public onKey(e) {
+    this.servicePhotos.photoOnKey(e);
+  }
+
+  @HostListener("window:resize", ["$event.target"])
+  public onResize() {
+    this.servicePhotos.justify();
+  }
+
+  private addFavorites() {
+    this.subscriptionFav = this.serviceAddFavorites.stream$.subscribe((response) => {
+      if (response) {
         this.serviceStorage.setJSON("my.photos", this.servicePhotos.photos);
-        this.serviceStorage.set("my.pages", this.servicePhotos.pages);
-        this.serviceStorage.set("my.total", this.servicePhotos.total);
-    }
-
-    private initSearchParams(): URLSearchParams {
-        const searchParams = new URLSearchParams();
-        searchParams.append("per_page", this.servicePhotos.strPerPage());
-        searchParams.append("page", this.servicePhotos.strPage());
-        searchParams.append("sort", this.category);
-        searchParams.append("extras", flickrUrls.extra.full);
-        return searchParams;
-    }
-
-    public prevPage() {
-        if (this.servicePhotos.prevPage()) {
-            this.fetch(false);
-        }
-    }
-    public nextPage() {
-        if (this.servicePhotos.nextPage()) {
-            this.fetch(false);
-        }
-    }
-    public closeDetails() {
-        this.servicePhotos.clearPhoto();
-    }
-
-    @HostListener("window:keydown", ["$event"])
-    public onKey(e) {
-        if (!this.servicePhotos.photo && e.target.localName !== "input") {
-            switch (e.key) {
-                case "ArrowRight":
-                    this.nextPage();
-                    break;
-                case "ArrowLeft":
-                    this.prevPage();
-                    break;
-            }
-        }
-        this.servicePhotos.photoOnKey(e);
-    }
-
-    @HostListener("window:resize", ["$event.target"])
-    public onResize() {
-        this.servicePhotos.justify();
-    }
-
-    private addFavorites() {
-        this.subscriptionFav = this.serviceAddFavorites.stream$.subscribe((response) => {
-            if (response) {
-                this.serviceStorage.setJSON("my.photos", this.servicePhotos.photos);
-            }
-        });
-        this.serviceAddFavorites.addFavorites(this.servicePhotos.photos);
-    }
-
-    private addComments() {
-        this.subscriptionCom = this.serviceAddComments.stream$.subscribe(() => {
-            // if (response) {
-            //     console.log(response);
-            // }
-        });
-        this.serviceAddComments.addComments(this.servicePhotos.photos);
-    }
-
-    private getPopular(init: boolean) {
-      this.serviceSearch.getMyPopular(this.initSearchParams())
-        .subscribe((data) => {
-          // bug in api: total always is same as per_page, pages always is one
-          console.log(data);
-          if (init) {
-            this.servicePhotos.photos = data.items;
-            this.offset = this.servicePhotos.getOffset();
-          } else {
-            this.servicePhotos.photos = this.servicePhotos.photos.concat(data.items);
-            this.offset = 0;
-          }
-          this.servicePhotos.total = data.total;
-          let pages = data.pages;
-          if (pages === 1) {// bug in api
-            pages = 999;
-          }
-          this.servicePhotos.pages = pages;
-          this.waiting = false;
-          this.servicePhotos.justify();
-          this.addFavorites();
-          this.addComments();
-          this.persistToStorage();
-        } );
-    }
-
-    public fetch(init: boolean) {
-        this.waiting = true;
-        if (init) {
-            this.servicePhotos.resetPage();
-        }
-        this.servicePhotos.clearPhoto();
-        this.getPopular(true);
-    }
-
-    public nextScrolledPage() {
-        console.log("scrolled...");
-      if (this.servicePhotos.nextPage()) {
-        this.getPopular(false);
       }
-        // this.after += this.count;
-        // this.fetchPage();
+    });
+    this.serviceAddFavorites.addFavorites(this.servicePhotos.photos);
+  }
+
+  private addComments() {
+    this.subscriptionCom = this.serviceAddComments.stream$.subscribe(() => {
+      // if (response) {
+      //     console.log(response);
+      // }
+    });
+    this.serviceAddComments.addComments(this.servicePhotos.photos);
+  }
+
+  private getPopular() {
+    this.serviceSearch.getMyPopular(this.initSearchParams())
+      .subscribe((data) => {
+        // bug in api: total always is same as per_page, pages always is one
+        this.servicePhotos.pages = 999; // is there a next page? always! (work-around)
+        // console.log(data);
+        this.servicePhotos.photos = this.servicePhotos.photos.concat(data.items);
+        this.servicePhotos.total = data.total;
+        this.waiting = false;
+        this.servicePhotos.justify();
+        this.addFavorites();
+        this.addComments();
+        this.persistToStorage();
+      });
+  }
+
+  public fetch(init: boolean) {
+    this.waiting = true;
+    if (init) {
+      this.servicePhotos.resetPage();
+      this.servicePhotos.setPhotos([]);
     }
+    this.servicePhotos.clearPhoto();
+    this.getPopular();
+  }
+
+  public nextScrolledPage() {
+    if (this.servicePhotos.nextPage()) {
+      this.getPopular();
+    }
+  }
 
 }
