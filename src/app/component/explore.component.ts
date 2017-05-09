@@ -18,13 +18,14 @@ const STORAGE_PARMS = "explore.per_page";
 })
 export class ExploreComponent implements OnInit {
 
-    public waiting: boolean = false;
-    private date: string;
+    public waiting = false;
+    public my = false;
+    public date: string;
 
     constructor(
         private serviceStorage: ServiceStorage,
         private serviceSearch: ServiceSearch,
-        private servicePhotos: ServicePhotos,
+        public servicePhotos: ServicePhotos,
         private serviceAddFavorites: ServiceAddFavorites,
     ) {}
 

@@ -6,9 +6,9 @@ import {ServicePhotoDetails} from "../service/service.photo-details";
 import {PhotoModel} from "../model/model.photo";
 
 @Component({
-    selector: "photo-details",
-    templateUrl: "../../partials/photo-details.html",
-    styleUrls: ["../../css/photo-details.css", "../../css/link.css"],
+  selector: "photo-details",
+  templateUrl: "../../partials/photo-details.html",
+  styleUrls: ["../../css/photo-details.css", "../../css/link.css"],
 })
 
 export class PhotoDetailsComponent implements OnInit {
@@ -17,17 +17,15 @@ export class PhotoDetailsComponent implements OnInit {
   public expand;
   public altSrc = false;
 
-  constructor(
-        private servicePhotoDetails: ServicePhotoDetails,
-    ) {}
+  constructor(private servicePhotoDetails: ServicePhotoDetails,) {
+  }
 
 
-    public ngOnInit() {
-        this.servicePhotoDetails.addToDetails(this.photo);
-        // console.log(this.photo);
-    }
+  public ngOnInit() {
+    this.servicePhotoDetails.addToDetails(this.photo);
+  }
 
-    public close() {
-        this.closeDetails.next();
-    }
+  public close() {
+    this.closeDetails.next();
+  }
 }

@@ -7,16 +7,16 @@
     </select>
     <input class="count-input"
            [(ngModel)]="servicePhotos.perPage"
-           (keyup.enter)="search(false)"
+           (keyup.enter)="fetch(false)"
            placeholder="Count"
     >
     <input class="page-input"
            [(ngModel)]="servicePhotos.page"
-           (keyup.enter)="search(false)"
+           (keyup.enter)="fetch(false)"
            placeholder="Page"
     >
     <button class="submit-btn"
-            (click)="search(true)"
+            (click)="fetch(true)"
     >Fetch</button>
     <br>
     <template [ngIf]="servicePhotos.photos && !servicePhotos.photo">
@@ -35,8 +35,9 @@
             [photos]="servicePhotos.photos"
             [my]="my"
             [waiting]="waiting"
-            [offset]="servicePhotos.getOffset()"
+            [offset]="offset"
             (selectPhoto)="servicePhotos.select($event)"
+            (nextScrollPage)="nextScrolledPage()"
     ></photo-list>
 </div>
 

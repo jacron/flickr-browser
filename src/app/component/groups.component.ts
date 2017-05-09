@@ -16,8 +16,9 @@ export class GroupsComponent implements OnInit {
     public groups;
     public photos;
     public photo;
-    public waiting: boolean = false;
-    public my: boolean = true;
+    public waiting = false;
+    public my = true;
+    public query;
 
     constructor(
         private serviceStorage: ServiceStorage,

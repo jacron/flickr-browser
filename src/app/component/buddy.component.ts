@@ -19,7 +19,7 @@ export class BuddyComponent implements OnInit {
     @Input() public nsid;
     @Input() public type;
     @Input() public short;
-    public descriptionCollapsed: boolean= true;
+    public descriptionCollapsed = true;
 
     constructor(
         private serviceSearch: ServiceSearch,

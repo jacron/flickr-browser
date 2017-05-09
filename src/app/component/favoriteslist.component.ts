@@ -5,7 +5,7 @@ import {Component, OnInit, OnDestroy, HostListener} from "@angular/core";
 import {Router, ActivatedRoute} from "@angular/router";
 import {ServiceStorage} from "../service/service.storage";
 import {ServiceFavoritesList} from "../service/service.favoriteslist";
-import {Subscription} from "rxjs";
+import {Subscription} from "rxjs/Subscription";
 import {PersonModel} from "../model/model.person";
 import {ServicePhotos} from "../service/service.photos";
 import {ServiceAddFavorites} from "../service/service.add-favorites";
@@ -20,9 +20,9 @@ export class FavoritesListComponent implements OnInit, OnDestroy {
     private sub: any;
     public nsid: string;
     public persons: PersonModel[];
-    public my: boolean = true;  // work-around to avoid owner icons
+    public my = true;  // work-around to avoid owner icons
     private subscriptionFavoritesList: Subscription = null;
-    public waiting: boolean= false;
+    public waiting = false;
     public message= {
         text: "Hello!",
         type: "alert",
@@ -35,7 +35,7 @@ export class FavoritesListComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private serviceStorage: ServiceStorage,
         private serviceFavoritesList: ServiceFavoritesList,
-        private servicePhotos: ServicePhotos,
+        public servicePhotos: ServicePhotos,
         private serviceAddFavorites: ServiceAddFavorites,
         private serviceFavorites: ServiceFavorites,
     ) {}

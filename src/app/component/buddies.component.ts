@@ -1,19 +1,19 @@
 /**
  * Created by orion on 21/03/2017.
  */
-import {Component, Input} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 @Component({
     templateUrl: "../../partials/buddies.html",
     styleUrls: ["../../css/buddies.css"],
     selector: "buddies",
 })
-export class BuddiesComponent {
+export class BuddiesComponent implements OnInit {
     @Input() public items;
     @Input() public isList;
     @Input() public query;
 
-    public listClass: string = "";
-    public hasIcon: boolean = false;
+    public listClass = "";
+    public hasIcon = false;
 
     public ngOnInit() {
         if (this.isList) {

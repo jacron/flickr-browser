@@ -37,7 +37,7 @@ export class FaverersListComponent implements OnInit, OnDestroy {
         private serviceStorage: ServiceStorage,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private servicePhotos: ServicePhotos,
+        public servicePhotos: ServicePhotos,
         private serviceFavoritesList: ServiceFavoritesList,
         private serviceAddFavorites: ServiceAddFavorites,
         private serviceFavorites: ServiceFavorites,

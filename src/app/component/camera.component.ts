@@ -3,8 +3,8 @@
  * Filter
  * Get all my photos taken by iPhone, with lense EF135, etc
  */
-import {Component, HostListener} from "@angular/core";
-import {Subscription} from "rxjs";
+import {Component, HostListener, OnInit} from "@angular/core";
+import {Subscription} from "rxjs/Subscription";
 import {calcPagesFromTotal, sortAlphaNumAsc} from "../helpers/util";
 import {ServiceAddFavorites} from "../service/service.add-favorites";
 import {ServicePhotos} from "../service/service.photos";
@@ -17,17 +17,18 @@ const CAMERAS_IN_STORE = "filter.cameras";
     templateUrl: "../../partials/camera.html",
     styleUrls: ["../../css/browse.css", "../../css/link.css"],
 })
-export class CameraComponent {
+export class CameraComponent implements OnInit {
     public pagesTodo: number;
     public cameras: string[];
-    public selectedCamera: string = "";
-    public my: boolean = true;
-    public waiting: boolean = false;
+    public selectedCamera = "";
+    public my = true;
+    public waiting = false;
     public subscription: Subscription = null;
+    public query;
 
     constructor(
-        private serviceSearch: ServiceSearch,
-        private servicePhotos: ServicePhotos,
+        public serviceSearch: ServiceSearch,
+        public servicePhotos: ServicePhotos,
         private serviceStorage: ServiceStorage,
         private serviceAddFavorites: ServiceAddFavorites,
     ) {}
@@ -73,7 +74,7 @@ export class CameraComponent {
         }
     }
 
-    private getCameras() {
+    public getCameras() {
         const perPage = 50;  // max allowed: 500 (use smaller number than total, to practice the algoritm)
 
         this.serviceSearch.myPhotosTotal().subscribe((total) => {

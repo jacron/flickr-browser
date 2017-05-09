@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
 import {ServiceStorage} from "../service/service.storage";
 import {ServiceFaverers} from "../service/service.faverers";
-import {Subscription} from "rxjs";
+import {Subscription} from "rxjs/Subscription";
 import {Router} from "@angular/router";
 import {ServiceSearch} from "../service/service.search";
 import {prettyNumber} from "../helpers/util";
@@ -20,21 +20,22 @@ const faverersFavoritesCount = "faverers.favoritesCount";
     styleUrls: ["../../css/faverers.css", "../../css/browse.css", "../../css/link.css"],
 })
 export class FaverersComponent implements OnInit, OnDestroy {
-    constructor(
+  public persons = [];
+  public favoritesCount: number;
+  public waiting = false;
+  public my = true;
+  public query;
+  public person: any;
+  private subscription: Subscription = null;
+  public minCount = 1;
+  public showCounts = false;
+
+  constructor(
         private serviceStorage: ServiceStorage,
         private serviceFaverers: ServiceFaverers,
         private serviceSearch: ServiceSearch,
         private router: Router,
     ) {}
-
-    public persons = [];
-    public favoritesCount: number;
-    public waiting: boolean = false;
-    public my: boolean = true;
-    public person: any;
-    private subscription: Subscription = null;
-    public minCount: number = 1;
-    public showCounts: boolean = false;
 
     public ngOnInit() {
         this.retrieveFromStorage();
@@ -81,7 +82,7 @@ export class FaverersComponent implements OnInit, OnDestroy {
         this.router.navigate(["/favererslist", nsid]).then();
     }
 
-    private getFaverers() {
+    public getFaverers() {
         this.waiting = true;
         this.subscription = this.serviceFaverers.faverers$
             .subscribe((data) => {

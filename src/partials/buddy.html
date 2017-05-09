@@ -2,8 +2,6 @@
     <a href="{{ person.ownerpage }}" title="{{ person.username }}">
         <img src="{{ person.buddyicon }}" class="buddy-icon">
         <div class="person-label">
-            <span *ngIf="photos">({{ photos.length }})</span>
-            <br>
             <div *ngIf="person.name"
                  class="person-name"
                  [innerHTML]="person.name"

@@ -1,7 +1,7 @@
 /**
  * Created by orion on 17/03/2017.
  */
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 @Component({
     template: `
 <div *ngIf="show"
@@ -9,9 +9,11 @@ import {Component} from "@angular/core";
 >{{ text }}</div>
 `,
     selector: "message",
-    inputs: ["text", "type", "show"],
     styles: [`.alert{color:red;}`],
 })
 export class MessageComponent {
+  @Input() public text;
+  @Input() public type;
+  @Input() public show;
 
 }

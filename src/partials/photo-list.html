@@ -2,7 +2,14 @@
 <div [hidden]="!waiting">
     loading...
 </div>
-<div class="card list">
+<div class="card list"
+     infiniteScroll
+     [infiniteScrollDistance]="0.5"
+     [infiniteScrollThrottle]="300"
+     [immediateCheck]="true"
+     (scrolled)="onScrolled()"
+     style="overflow: scroll"
+>
     <ul id="cardlist">
         <li class="tile"
             *ngFor="let p of photos; let idx=index"

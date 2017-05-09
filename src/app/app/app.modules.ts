@@ -28,8 +28,6 @@ import {PageNavigationComponent} from "../component/page-navigation.component";
 import { PhotoDetailsComponent } from "../component/photo-details.component";
 import { PhotoListComponent} from "../component/photo-list.component";
 import {QueryTextComponent} from "../directives/query-selector/component.query-text";
-import {RecentComponent} from "../component/recent.component";
-import {TagsComponent} from "../component/tags.component";
 import {QueryPipe} from "../directives/query-selector/pipe.query";
 import {ServiceAddFavorites} from "../service/service.add-favorites";
 import {ServiceFaverers} from "../service/service.faverers";
@@ -45,6 +43,7 @@ import {routing} from "./app.routing";
 import {ServiceAddComments} from "../service/service.add-comments";
 import {CameraComponent} from "../component/camera.component";
 import {LensesComponent} from "../component/lenses.component";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 @NgModule({
     imports: [
@@ -52,6 +51,7 @@ import {LensesComponent} from "../component/lenses.component";
         FormsModule,
         HttpModule,
         routing,
+        InfiniteScrollModule,
     ],
     declarations: [
         AppComponent,
@@ -59,9 +59,7 @@ import {LensesComponent} from "../component/lenses.component";
         PhotoListComponent,
         BrowseComponent,
         ExploreComponent,
-        TagsComponent,
         MyComponent,
-        RecentComponent,
         InterestingComponent,
         AboutComponent,
         FaverersComponent,

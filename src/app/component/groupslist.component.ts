@@ -12,13 +12,13 @@ import {ServicePhotos} from "../service/service.photos";
 export class GroupsListComponent implements OnInit, OnDestroy {
     public sub;
     public nsid;
-    public waiting: boolean = false;
-    public my: boolean = true;
+    public waiting = false;
+    public my = true;
 
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private servicePhotos: ServicePhotos,
+        public servicePhotos: ServicePhotos,
     ) {}
 
     public ngOnInit() {

@@ -7,9 +7,6 @@ import {Component} from "@angular/core";
     styleUrls: ["../../css/browse.css"],
 })
 export class InterestingComponent {
-    /* tslint:disable:no-empty */
-    constructor() {}
-
     public links = [
         {
             url: "https://www.flickr.com/services/api/",
@@ -36,4 +33,8 @@ export class InterestingComponent {
             name: "how to get explored",
         },
     ];
+
+  /* tslint:disable:no-empty */
+  constructor() {}
+
 }

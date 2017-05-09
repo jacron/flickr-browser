@@ -3,7 +3,7 @@ import {ServiceSearch} from "../service/service.search";
 import {ServiceStorage} from "../service/service.storage";
 import {URLSearchParams} from "@angular/http";
 import {ServicePhotos} from "../service/service.photos";
-import {Subscription} from "rxjs";
+import {Subscription} from "rxjs/Subscription";
 import {ServiceAddFavorites} from "../service/service.add-favorites";
 import {ServiceAddComments} from "../service/service.add-comments";
 import {flickrUrls} from "../helpers/urls";
@@ -16,14 +16,6 @@ import {flickrUrls} from "../helpers/urls";
     styleUrls: [ "../../css/browse.css" ],
 })
 export class MyComponent implements OnInit {
-    constructor(
-        private serviceSearch: ServiceSearch,
-        private serviceStorage: ServiceStorage,
-        private servicePhotos: ServicePhotos,
-        private serviceAddFavorites: ServiceAddFavorites,
-        private serviceAddComments: ServiceAddComments,
-    ) {}
-
     public categoryOptions = [
         { value: "faves", name: "faves" },
         { value: "views", name: "views" },
@@ -32,18 +24,27 @@ export class MyComponent implements OnInit {
         "teresting" },
     ];
     public category: string;
-    public my: boolean = true;
-    public waiting: boolean = false;
+    public my = true;
+    public waiting = false;
+    public offset;
     private subscriptionFav: Subscription = null;
     private subscriptionCom: Subscription = null;
 
-    public ngOnInit() {
+  constructor(
+    private serviceSearch: ServiceSearch,
+    private serviceStorage: ServiceStorage,
+    public servicePhotos: ServicePhotos,
+    private serviceAddFavorites: ServiceAddFavorites,
+    private serviceAddComments: ServiceAddComments,
+  ) {}
+
+  public ngOnInit() {
         this.servicePhotos.initPhotos();
         this.servicePhotos.resetPage();
         this.retrieveFromStorage();
         // console.log(this.servicePhotos.photos);
         // this.servicePhotos.justify();
-        this.search(true);
+        this.fetch(true);
     }
 
     private retrieveFromStorage() {
@@ -73,12 +74,12 @@ export class MyComponent implements OnInit {
 
     public prevPage() {
         if (this.servicePhotos.prevPage()) {
-            this.search(false);
+            this.fetch(false);
         }
     }
     public nextPage() {
         if (this.servicePhotos.nextPage()) {
-            this.search(false);
+            this.fetch(false);
         }
     }
     public closeDetails() {
@@ -123,32 +124,46 @@ export class MyComponent implements OnInit {
         this.serviceAddComments.addComments(this.servicePhotos.photos);
     }
 
-    public search(init: boolean) {
+    private getPopular(init: boolean) {
+      this.serviceSearch.getMyPopular(this.initSearchParams())
+        .subscribe((data) => {
+          // bug in api: total always is same as per_page, pages always is one
+          console.log(data);
+          if (init) {
+            this.servicePhotos.photos = data.items;
+            this.offset = this.servicePhotos.getOffset();
+          } else {
+            this.servicePhotos.photos = this.servicePhotos.photos.concat(data.items);
+            this.offset = 0;
+          }
+          this.servicePhotos.total = data.total;
+          let pages = data.pages;
+          if (pages === 1) {// bug in api
+            pages = 999;
+          }
+          this.servicePhotos.pages = pages;
+          this.waiting = false;
+          this.servicePhotos.justify();
+          this.addFavorites();
+          this.addComments();
+          this.persistToStorage();
+        } );
+    }
+
+    public fetch(init: boolean) {
         this.waiting = true;
         if (init) {
             this.servicePhotos.resetPage();
         }
         this.servicePhotos.clearPhoto();
-        this.serviceSearch.getMyPopular(this.initSearchParams())
-            .subscribe((data) => {
-                // bug in api: total always is same as per_page, pages always is one
-                this.servicePhotos.photos = data.items;
-                this.servicePhotos.total = data.total;
-                let pages = data.pages;
-                if (pages === 1) {// bug in api
-                    pages = 999;
-                }
-                this.servicePhotos.pages = pages;
-                this.waiting = false;
-                this.servicePhotos.justify();
-                this.addFavorites();
-                this.addComments();
-                this.persistToStorage();
-            } );
+        this.getPopular(true);
     }
 
     public nextScrolledPage() {
         console.log("scrolled...");
+      if (this.servicePhotos.nextPage()) {
+        this.getPopular(false);
+      }
         // this.after += this.count;
         // this.fetchPage();
     }

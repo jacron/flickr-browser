@@ -15,8 +15,6 @@ import {GroupsComponent} from "../component/groups.component";
 import {GroupsListComponent} from "../component/groupslist.component";
 import {InterestingComponent} from "../component/interesting.component";
 import {MyComponent} from "../component/my.component";
-import {RecentComponent} from "../component/recent.component";
-import {TagsComponent} from "../component/tags.component";
 import {CameraComponent} from "../component/camera.component";
 import {LensesComponent} from "../component/lenses.component";
 
@@ -30,16 +28,8 @@ const appRoutes: Routes = [
         component: ExploreComponent,
     },
     {
-        path: "tags",
-        component: TagsComponent,
-    },
-    {
         path: "my",
         component: MyComponent,
-    },
-    {
-        path: "recent",
-        component: RecentComponent,
     },
     {
         path: "faverers",

@@ -64,7 +64,7 @@ System.register(["@angular/core", "../service/service.search", "../service/servi
                     this.retrieveFromStorage();
                     // console.log(this.servicePhotos.photos);
                     // this.servicePhotos.justify();
-                    this.search(true);
+                    this.fetch(true);
                 };
                 MyComponent.prototype.retrieveFromStorage = function () {
                     this.servicePhotos.perPage = parseInt(this.serviceStorage.get("my.per_page"), 10) || 15;
@@ -90,12 +90,12 @@ System.register(["@angular/core", "../service/service.search", "../service/servi
                 };
                 MyComponent.prototype.prevPage = function () {
                     if (this.servicePhotos.prevPage()) {
-                        this.search(false);
+                        this.fetch(false);
                     }
                 };
                 MyComponent.prototype.nextPage = function () {
                     if (this.servicePhotos.nextPage()) {
-                        this.search(false);
+                        this.fetch(false);
                     }
                 };
                 MyComponent.prototype.closeDetails = function () {
@@ -134,7 +134,7 @@ System.register(["@angular/core", "../service/service.search", "../service/servi
                     });
                     this.serviceAddComments.addComments(this.servicePhotos.photos);
                 };
-                MyComponent.prototype.search = function (init) {
+                MyComponent.prototype.fetch = function (init) {
                     var _this = this;
                     this.waiting = true;
                     if (init) {
