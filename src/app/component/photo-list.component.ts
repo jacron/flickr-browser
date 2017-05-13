@@ -10,7 +10,7 @@ import {Subject} from "rxjs/Subject";
 @Component({
   selector: "photo-list",
   templateUrl: "../../partials/photo-list.html",
-  styleUrls: ["../../css/photo-list.css"],
+  styleUrls: ["../../css/photo-list.css", "../../css/link.css"],
 })
 
 export class PhotoListComponent implements OnInit, OnChanges {

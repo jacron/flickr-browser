@@ -52,9 +52,6 @@ export class MyComponent implements OnInit {
   private persistToStorage() {
     this.serviceStorage.set("my.per_page", this.servicePhotos.strPerPage());
     this.serviceStorage.set("my.category", this.category);
-    // this.serviceStorage.setJSON("my.photos", this.servicePhotos.photos);
-    // this.serviceStorage.set("my.pages", this.servicePhotos.pages);
-    // this.serviceStorage.set("my.total", this.servicePhotos.total);
   }
 
   private initSearchParams(): URLSearchParams {
@@ -103,7 +100,6 @@ export class MyComponent implements OnInit {
       .subscribe((data) => {
         // bug in api: total always is same as per_page, pages always is one
         this.servicePhotos.pages = 999; // is there a next page? always! (work-around)
-        // console.log(data);
         this.servicePhotos.photos = this.servicePhotos.photos.concat(data.items);
         this.servicePhotos.total = data.total;
         this.waiting = false;
