@@ -19,62 +19,62 @@ export class ServiceFaverers {
     public pagesTodo: number;
     public favoritesCount: number;
 
-    constructor(
+  // Observable source
+  private source = new BehaviorSubject<any>(0);
+
+  // Observable stream
+  public faverers$ = this.source.asObservable();
+
+  /*
+   Geef een ongetypeerd object met de nodige gegevens voor een persoon.
+   */
+  private static packedPerson(person: any): any {
+    const name = person.realname || person.username;
+    const buddyIcon = person.iconfarm === 0 ? flickrUrls.staticName.defaultBuddyIcon
+      : buddyFavIconSrc(person);
+    return {
+      buddyicon: buddyIcon,
+      ownerpage: favOwnerPage(person),
+      name,
+      nsid: person.nsid,
+      items: [],
+    };
+  }
+
+  /*
+   In het veld item_ids worden de id's van de gefavede foto's alvast opgeslagen,
+   zodat we gelijk ook het aantal al hebben om te tonen.
+   */
+  private storePhotoFaverer(person, itemId) {
+    let found = false;
+    const name = person.realname && person.realname.length > 0 ? person.realname : person.username;
+    for (const pp of this.persons) {
+      if (pp.name === name) {
+        found = true;
+        pp.items.push(fave_item(person.favedate, itemId));
+        break;
+      }
+    }
+    if (!found) {
+      const newPerson = ServiceFaverers.packedPerson(person);
+      newPerson.items.push(fave_item(person.favedate, itemId));
+      this.persons.push(newPerson);
+    }
+  }
+
+  /*
+   Faverers worden in een lijst opgenomen (geen dubbelen).
+   */
+  private storePhotoFaverers(persons, itemId) {
+    this.favoritesCount += persons.length;
+    for (const person of persons) {
+      this.storePhotoFaverer(person, itemId);
+    }
+  }
+
+  constructor(
         private serviceSearch: ServiceSearch,
     ) {}
-
-    // Observable source
-    private source = new BehaviorSubject<any>(0);
-
-    // Observable stream
-    public faverers$ = this.source.asObservable();
-
-    /*
-     Geef een ongetypeerd object met de nodige gegevens voor een persoon.
-     */
-    private static packedPerson(person: any): any {
-        const name = person.realname || person.username;
-        const buddyIcon = person.iconfarm === 0 ? flickrUrls.staticName.defaultBuddyIcon
-            : buddyFavIconSrc(person);
-        return {
-            buddyicon: buddyIcon,
-            ownerpage: favOwnerPage(person),
-            name,
-            nsid: person.nsid,
-            items: [],
-        };
-    }
-
-    /*
-     In het veld item_ids worden de id's van de gefavede foto's alvast opgeslagen,
-     zodat we gelijk ook het aantal al hebben om te tonen.
-     */
-    private storePhotoFaverer(person, itemId) {
-        let found = false;
-        const name = person.realname && person.realname.length > 0 ? person.realname : person.username;
-        for (const pp of this.persons) {
-            if (pp.name === name) {
-                found = true;
-                pp.items.push(fave_item(person.favedate, itemId));
-                break;
-            }
-        }
-        if (!found) {
-            const newPerson = ServiceFaverers.packedPerson(person);
-            newPerson.items.push(fave_item(person.favedate, itemId));
-            this.persons.push(newPerson);
-        }
-    }
-
-    /*
-     Faverers worden in een lijst opgenomen (geen dubbelen).
-     */
-    private storePhotoFaverers(persons, itemId) {
-        this.favoritesCount += persons.length;
-        for (const person of persons) {
-            this.storePhotoFaverer(person, itemId);
-        }
-    }
 
     /*
      In de laatste iteratie van het ophalen van favorieten
