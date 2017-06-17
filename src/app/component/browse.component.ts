@@ -45,11 +45,12 @@ export class BrowseComponent implements OnInit {
 
     public ngOnInit() {
         this.retrieveFromStorage();
-        this.retrievePhotosFromStorage();
+        // this.retrievePhotosFromStorage();
         this.servicePhotos.resetPage();
         this.servicePhotos.justify();
         this.cardViewExpanded = true;
         // console.log(this.history);
+        this.search(true);
     }
 
     public resetQuery(focusable) {
@@ -182,7 +183,6 @@ export class BrowseComponent implements OnInit {
         const searchParams = this.searchSettings.getSearchParams();
         searchParams.append("per_page", this.servicePhotos.perPage);
         searchParams.append("page", this.servicePhotos.page);
-        // console.log(searchParams);
         this.serviceSearch.search(searchParams)
             .subscribe((data) => {
                 if (data.items) {
