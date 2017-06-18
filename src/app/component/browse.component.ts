@@ -116,18 +116,6 @@ export class BrowseComponent implements OnInit {
     this.servicePhotos.justify();
   }
 
-  private initSearch(init: boolean) {
-    if (init) {
-      this.servicePhotos.resetPage();
-      const t = this.searchSettings.text;
-      if (t && t !== " " && t !== "") {
-        this.insertHistory(this.searchSettings.text);
-      }
-    }
-    this.servicePhotos.clearPhoto();
-    this.persistToStorage();
-  }
-
   public openHistoryItem(item) {
     this.searchSettings.text = item.text;
     this.fetch(true);
@@ -179,14 +167,21 @@ export class BrowseComponent implements OnInit {
       });
   }
 
+  private initSearch(init: boolean) {
+    if (init) {
+      this.servicePhotos.resetPage();
+      const t = this.searchSettings.text;
+      if (t && t !== " " && t !== "") {
+        this.insertHistory(this.searchSettings.text);
+      }
+    }
+    this.servicePhotos.clearPhoto();
+    this.persistToStorage();
+  }
+
   public fetch(init: boolean) {
     this.waiting = true;
     this.initSearch(init);
-    // if (init) {
-    //   this.servicePhotos.resetPage();
-    //   this.servicePhotos.setPhotos([]);
-    // }
-    // this.servicePhotos.clearPhoto();
     this.search();
   }
 

@@ -52,12 +52,12 @@
         </div>
         <input class="count-input"
                [(ngModel)]="servicePhotos.perPage"
-               (keyup.enter)="search(false)"
+               (keyup.enter)="fetch(false)"
                placeholder="Count"
         >
         <input class="page-input"
                [(ngModel)]="servicePhotos.page"
-               (keyup.enter)="search(false)"
+               (keyup.enter)="fetch(false)"
                placeholder="Page"
         >
         <select class="safe-input"
@@ -101,7 +101,7 @@
                id="mine"
         >
         <button class="submit-btn"
-                (click)="search(true)"
+                (click)="fetch(true)"
         >Fetch</button>
     </div>
 </div>
