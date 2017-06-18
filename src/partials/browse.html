@@ -6,10 +6,6 @@
 ></message>
 <div class="card browse"
      *ngIf="!servicePhotos.photo">
-    <div class="toggle"
-        (click)="toggleCardView()">
-        <span>{{ cardViewExpanded ? '/\\' : '\\/' }}</span>
-    </div>
     <h1 class="search-headline">
         Flickr Browse
         <span *ngIf="servicePhotos.photos">
@@ -107,15 +103,6 @@
         <button class="submit-btn"
                 (click)="search(true)"
         >Fetch</button>
-        <template [ngIf]="servicePhotos.photos && !servicePhotos.photo">
-            <div class="page-navigation">
-                <page-navigation (prev)="prevPage()"
-                                 (next)="nextPage()"
-                                 [page]="servicePhotos.page"
-                                 [pages]="servicePhotos.pages"
-                ></page-navigation>
-            </div>
-        </template>
     </div>
 </div>
 
@@ -124,8 +111,9 @@
             [photos]="servicePhotos.photos"
             (selectPhoto)="servicePhotos.select($event)"
             [my]="searchSettings.my"
-            [offset]="servicePhotos.getOffset()"
+            [offset]="offset"
             [waiting]="waiting"
+            (nextScrollPage)="nextScrolledPage()"
     ></photo-list>
 </div>
 
@@ -137,11 +125,6 @@
 </div>
 <div class="clear"></div>
 <div class="page-navigation" *ngIf="servicePhotos.photos && !servicePhotos.photo">
-    <page-navigation (prev)="prevPage()"
-                     (next)="nextPage()"
-                     [page]="servicePhotos.page"
-                     [pages]="servicePhotos.pages"
-    ></page-navigation>
     <div class="search-label">search for:
         <span class="text">{{ searchSettings.text }}</span></div>
 </div>

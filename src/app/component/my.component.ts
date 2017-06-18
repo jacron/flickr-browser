@@ -33,8 +33,8 @@ export class MyComponent implements OnInit {
               private serviceStorage: ServiceStorage,
               public servicePhotos: ServicePhotos,
               private serviceAddFavorites: ServiceAddFavorites,
-              private serviceAddComments: ServiceAddComments,) {
-  }
+              private serviceAddComments: ServiceAddComments,
+    ) {}
 
   public ngOnInit() {
     this.servicePhotos.initPhotos();
@@ -87,11 +87,7 @@ export class MyComponent implements OnInit {
   }
 
   private addComments() {
-    this.subscriptionCom = this.serviceAddComments.stream$.subscribe(() => {
-      // if (response) {
-      //     console.log(response);
-      // }
-    });
+    this.subscriptionCom = this.serviceAddComments.stream$.subscribe(() => {});
     this.serviceAddComments.addComments(this.servicePhotos.photos);
   }
 
