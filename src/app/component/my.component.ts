@@ -109,8 +109,7 @@ export class MyComponent implements OnInit {
   public fetch(init: boolean) {
     this.waiting = true;
     if (init) {
-      this.servicePhotos.resetPage();
-      this.servicePhotos.setPhotos([]);
+      this.servicePhotos.initPhotos();
     }
     this.servicePhotos.clearPhoto();
     this.getPopular();

@@ -169,7 +169,7 @@ export class BrowseComponent implements OnInit {
 
   private initSearch(init: boolean) {
     if (init) {
-      this.servicePhotos.resetPage();
+      this.servicePhotos.initPhotos();
       const t = this.searchSettings.text;
       if (t && t !== " " && t !== "") {
         this.insertHistory(this.searchSettings.text);
