@@ -251,13 +251,15 @@ export class ServiceSearch {
      * Use search one photo, to get my counts
      */
     public myPhotosTotal() {
+      const params = ServiceSearch.searchParams({
+        user_id: ownNsid,
+        per_page: "1",
+        page: "1",
+        content_type: "1", // important!
+      });
+      // console.log(params)
         return this.http.get(flickrUrls.api.search, {
-            search: ServiceSearch.searchParams({
-                user_id: ownNsid,
-                per_page: "1",
-                page: "1",
-                content_type: "1", // important!
-            }),
+            search: params,
         })
             .map((response) => {
                 const json = response.json();

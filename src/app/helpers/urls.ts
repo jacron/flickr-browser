@@ -24,7 +24,7 @@ export const flickrUrls  = {
         tags: `https://www.flickr.com/photos/tags/$1`,
         group: `http://www.flickr.com/groups/$1`,
         photoPage: `https://farm$1.staticflickr.com/$2/$3_$4.jpg`,
-        photoLPage: `https://farm$1.staticflickr.com/$2/$3_$4_h.jpg`,
+        photoLPage: `https://farm$1.staticflickr.com/$2/$3_$4_b.jpg`,
         original: `https://farm$1.staticflickr.com/$2/$3_$4_o.$5`,
     },
     api: {

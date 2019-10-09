@@ -142,6 +142,7 @@ export class CameraComponent implements OnInit {
             this.serviceSearch.getExif(photo.id).subscribe((data) => {
                 if (data) {
                     if (data.camera === this.selectedCamera) {
+                      console.log(photo);
                         this.servicePhotos.addPhoto(photo);
                     }
                 }
@@ -173,6 +174,7 @@ export class CameraComponent implements OnInit {
                 for (let i = 0; i < pages; i++) {
                     this.serviceSearch.myPhotosPage(i + 1, perPage, true).subscribe((photos) => {
                         if (photos && photos.photo.length > 0) {
+                          console.log(photos);
                             this.filterPhotosOnCamera(photos.photo);
                         } else {
                             console.log("empty result");
